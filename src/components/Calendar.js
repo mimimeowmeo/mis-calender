@@ -70,9 +70,11 @@ const Calendar = ({ date }) => {
     setHoveredDay(day);
   };
   const handleLeftClick = (e) => {
+    e.preventDefault();
     setMonthDate((prev) => prev.subtract(1, "month"));
   };
   const handleRightClick = (e) => {
+    e.preventDefault();
     setMonthDate((prev) => prev.add(1, "month"));
   };
   const handleDayClick = (day) => {
