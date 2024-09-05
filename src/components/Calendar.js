@@ -88,8 +88,7 @@ const Calendar = ({ date }) => {
       setSelectedStartDate(day);
     }
   };
-  console.log(selectedStartDate, selectedEndDate, 22);
-  console.log(date.isBefore(undefined));
+
   return (
     <div>
       <Header
