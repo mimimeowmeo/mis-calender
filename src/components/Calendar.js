@@ -29,17 +29,17 @@ const Calendar = ({ date }) => {
   const [hoveredDay, setHoveredDay] = useState();
   const preselectionRange = useMemo(
     () =>
-      calendar.reduce((acc, d) => {
+      calendar.reduce((acc, day) => {
         if (
           selectedStartDate &&
           !selectedEndDate &&
           hoveredDay &&
           ((hoveredDay.isAfter(selectedStartDate) &&
-            d.isAfter(selectedStartDate) &&
-            d.isBefore(hoveredDay)) ||
-            d.isSame(hoveredDay, "day"))
+            day.isAfter(selectedStartDate) &&
+            day.isBefore(hoveredDay)) ||
+            day.isSame(hoveredDay, "day"))
         ) {
-          acc.push(d);
+          acc.push(day);
         }
         return acc;
       }, []),
@@ -47,25 +47,21 @@ const Calendar = ({ date }) => {
   );
   const selectionRange = useMemo(
     () =>
-      calendar.reduce((acc, d) => {
+      calendar.reduce((acc, day) => {
         if (
-          selectedStartDate &&
-          selectedEndDate &&
-          d.isAfter(selectedStartDate) &&
-          d.isBefore(selectedEndDate)
+          (selectedStartDate && day.isSame(selectedStartDate, "day")) ||
+          (selectedEndDate && day.isSame(selectedEndDate, "day")) ||
+          (selectedStartDate &&
+            selectedEndDate &&
+            day.isAfter(selectedStartDate) &&
+            day.isBefore(selectedEndDate))
         ) {
-          acc.push(d);
-        } else if (
-          (selectedStartDate && d.isSame(selectedStartDate, "day")) ||
-          (selectedEndDate && d.isSame(selectedEndDate, "day"))
-        ) {
-          acc.push(d);
+          acc.push(day);
         }
         return acc;
       }, []),
     [selectedStartDate, selectedEndDate, calendar]
   );
-
   const handleHover = (day) => {
     setHoveredDay(day);
   };
@@ -92,7 +88,8 @@ const Calendar = ({ date }) => {
       setSelectedStartDate(day);
     }
   };
-
+  console.log(selectedStartDate, selectedEndDate, 22);
+  console.log(date.isBefore(undefined));
   return (
     <div>
       <Header
@@ -113,7 +110,7 @@ const Calendar = ({ date }) => {
             key={day.date() + "+" + day.month()}
             day={day}
             onClick={(day) => handleDayClick(day)}
-            active={selectionRange && selectionRange.includes(day)}
+            active={selectionRange.includes(day)}
             onHover={(day) => handleHover(day)}
             hoverActive={preselectionRange && preselectionRange.includes(day)}
           />
