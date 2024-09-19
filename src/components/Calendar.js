@@ -115,6 +115,18 @@ const Calendar = ({ date }) => {
           />
         ))}
       </div>
+      <div className="font-bold flex flex-col items-center p-5 text-red-500">
+        <span>{selectedStartDate && "Date Selected:"}</span>
+        <span>
+          {selectedStartDate &&
+            `${selectedStartDate.format("DD")} / 
+        ${selectedStartDate.format("MM")} / ${selectedStartDate.format("YY")}`}
+          {selectedEndDate &&
+            ` - 
+        ${selectedEndDate.format("DD")} / ${selectedEndDate.format("MM")} /
+        ${selectedEndDate.format("YY")}`}
+        </span>
+      </div>
     </div>
   );
 };
